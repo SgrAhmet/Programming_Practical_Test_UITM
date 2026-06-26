@@ -5,7 +5,13 @@ let list = document.getElementById("list");
 let participants = document.getElementById("participantsH2");
 let arr = JSON.parse(localStorage.getItem("users")) || [];
 
-console.log(msgArea);
+function showMessageArea() {
+  msgArea.classList.add("show");
+
+  setTimeout(() => {
+    msgArea.classList.remove("show");
+  }, 3000);
+}
 
 function showUsers() {
   list.innerHTML = "";
@@ -32,6 +38,7 @@ function del(i) {
   msg.innerHTML = "Detele successfully";
   msg.classList.add("success");
   msgArea.classList.add("successArea");
+  showMessageArea();
 }
 
 showUsers();
@@ -48,47 +55,57 @@ form.addEventListener("submit", function (e) {
   msg.className = "";
 
   if (name == "") {
-  msgArea.classList.remove("errorArea", "successArea");
+    msgArea.classList.remove("errorArea", "successArea");
 
     msg.innerHTML = "Full name required";
     msg.classList.add("error");
     msgArea.classList.add("errorArea");
+    showMessageArea();
+
     return;
   }
 
   if (email.indexOf("@") == -1) {
-  msgArea.classList.remove("errorArea", "successArea");
+    msgArea.classList.remove("errorArea", "successArea");
 
     msg.innerHTML = "Invalid email";
     msgArea.classList.add("errorArea");
     msg.classList.add("error");
+    showMessageArea();
+
     return;
   }
 
   if (age < 18) {
-  msgArea.classList.remove("errorArea", "successArea");
+    msgArea.classList.remove("errorArea", "successArea");
 
     msg.innerHTML = "Age must be 18+";
     msgArea.classList.add("errorArea");
     msg.classList.add("error");
+    showMessageArea();
+
     return;
   }
 
   if (track == "") {
-  msgArea.classList.remove("errorArea", "successArea");
+    msgArea.classList.remove("errorArea", "successArea");
 
     msg.innerHTML = "Choose track";
     msgArea.classList.add("errorArea");
     msg.classList.add("error");
+    showMessageArea();
+
     return;
   }
 
   if (!terms) {
-  msgArea.classList.remove("errorArea", "successArea");
+    msgArea.classList.remove("errorArea", "successArea");
 
     msg.innerHTML = "Accept terms";
     msgArea.classList.add("errorArea");
     msg.classList.add("error");
+    showMessageArea();
+
     return;
   }
 
@@ -112,6 +129,7 @@ form.addEventListener("submit", function (e) {
   msgArea.classList.remove("errorArea", "successArea");
   msg.classList.add("success");
   msgArea.classList.add("successArea");
+  showMessageArea();
 
   form.reset();
   showUsers();

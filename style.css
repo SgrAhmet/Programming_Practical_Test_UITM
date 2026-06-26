@@ -88,6 +88,12 @@ button:hover{
     background-color: white;
     padding: 10px;
 
+   opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.5s ease-in-out;
+    pointer-events: none;
+
 }
 .successArea{
     background-color:rgb(191, 237, 191);
@@ -98,6 +104,13 @@ button:hover{
     background-color:rgb(238, 149, 149);
     border-left: 5px solid rgb(148, 81, 81);
 
+}
+
+.show{
+   opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 
