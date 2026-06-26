@@ -1,92 +1,118 @@
-let form = document.getElementById("form")
-let msg = document.getElementById("msg")
-let list = document.getElementById("list")
-let participants = document.getElementById("participantsH2")
-let arr = JSON.parse(localStorage.getItem("users")) || []
+let form = document.getElementById("form");
+let msg = document.getElementById("msg");
+let msgArea = document.getElementById("msgArea");
+let list = document.getElementById("list");
+let participants = document.getElementById("participantsH2");
+let arr = JSON.parse(localStorage.getItem("users")) || [];
 
+console.log(msgArea);
 
-function showUsers(){
-    list.innerHTML = ""
+function showUsers() {
+  list.innerHTML = "";
 
-    for(let i=0;i<arr.length;i++){
-        let li = document.createElement("li")
-        li.innerHTML = arr[i].name + " - " + arr[i].track +
-            ` <button onclick="del(${i})">Delete</button>`
-        list.appendChild(li)
-    }
+  for (let i = 0; i < arr.length; i++) {
+    let li = document.createElement("li");
+    li.innerHTML =
+      arr[i].name +
+      " - " +
+      arr[i].track +
+      ` <button onclick="del(${i})">Delete</button>`;
+    list.appendChild(li);
+  }
 
-    participants.innerHTML = `Participants (${arr.length})`
-
+  participants.innerHTML = `Participants (${arr.length})`;
 }
 
-function del(i){
-    arr.splice(i,1)
-    localStorage.setItem("users", JSON.stringify(arr))
-    showUsers()
-    msg.innerHTML = "Delete successfully"
-    msg.classList.add("success")
+function del(i) {
+  arr.splice(i, 1);
+  localStorage.setItem("users", JSON.stringify(arr));
+  showUsers();
+  msgArea.classList.remove("errorArea", "successArea");
+
+  msg.innerHTML = "Detele successfully";
+  msg.classList.add("success");
+  msgArea.classList.add("successArea");
 }
 
-showUsers()
+showUsers();
 
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let age = Number(document.getElementById("age").value);
+  let track = document.getElementById("track").value;
+  let terms = document.getElementById("terms").checked;
 
-form.addEventListener("submit", function(e){
-    e.preventDefault()
+  msg.className = "";
 
-    let name = document.getElementById("name").value.trim()
-    let email = document.getElementById("email").value.trim()
-    let age = Number(document.getElementById("age").value)
-    let track = document.getElementById("track").value
-    let terms = document.getElementById("terms").checked
+  if (name == "") {
+  msgArea.classList.remove("errorArea", "successArea");
 
-    msg.className = ""
+    msg.innerHTML = "Full name required";
+    msg.classList.add("error");
+    msgArea.classList.add("errorArea");
+    return;
+  }
 
-    if(name == ""){
-        msg.innerHTML = "Full name required"
-        msg.classList.add("error")
-        return
-    }
+  if (email.indexOf("@") == -1) {
+  msgArea.classList.remove("errorArea", "successArea");
 
-    if(email.indexOf("@") == -1){
-        msg.innerHTML = "Invalid email"
-        msg.classList.add("error")
-        return
-    }
+    msg.innerHTML = "Invalid email";
+    msgArea.classList.add("errorArea");
+    msg.classList.add("error");
+    return;
+  }
 
-    if(age < 18){
-        msg.innerHTML = "Age must be 18+"
-        msg.classList.add("error")
-        return
-    }
+  if (age < 18) {
+  msgArea.classList.remove("errorArea", "successArea");
 
-    if(track == ""){
-        msg.innerHTML = "Choose track"
-        msg.classList.add("error")
-        return
-    }
+    msg.innerHTML = "Age must be 18+";
+    msgArea.classList.add("errorArea");
+    msg.classList.add("error");
+    return;
+  }
 
-    if(!terms){
-        msg.innerHTML = "Accept terms"
-        msg.classList.add("error")
-        return
-    }
+  if (track == "") {
+  msgArea.classList.remove("errorArea", "successArea");
 
-    let user = {
-        name:name,
-        email:email,
-        age:age,
-        track:track
-    }
+    msg.innerHTML = "Choose track";
+    msgArea.classList.add("errorArea");
+    msg.classList.add("error");
+    return;
+  }
 
-    arr.push(user)
+  if (!terms) {
+  msgArea.classList.remove("errorArea", "successArea");
 
-    localStorage.setItem("users", JSON.stringify(arr))
+    msg.innerHTML = "Accept terms";
+    msgArea.classList.add("errorArea");
+    msg.classList.add("error");
+    return;
+  }
 
-    msg.innerHTML = "Registered successfully"
-    msg.classList.add("success")
+  let user = {
+    name: name,
+    email: email,
+    age: age,
+    track: track,
+  };
 
-    form.reset()
-    showUsers()
-})
+  arr.push(user);
 
+  localStorage.setItem("users", JSON.stringify(arr));
+
+  msg.innerHTML = `
+  ${user.name} has been signed up for the<br>
+  workshop.<br>
+  Track: ${user.track}<br>
+  Age: ${user.age}
+`;
+  msgArea.classList.remove("errorArea", "successArea");
+  msg.classList.add("success");
+  msgArea.classList.add("successArea");
+
+  form.reset();
+  showUsers();
+});

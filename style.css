@@ -27,6 +27,17 @@ input,select,button{
     box-sizing:border-box;
 }
 
+input{
+    border: 1px solid black;
+
+}
+
+input:focus{
+    background-color: rgb(221, 221, 221);
+    outline: none;
+    border: 2px solid black;
+}
+
 .buttonDiv{
     display: flex;
     flex-direction: column;
@@ -65,4 +76,28 @@ button:hover{
 .success{
     color:green;
 }
+
+.msgArea{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    border-left: 5px solid rgb(131, 131, 129);
+    border-radius: 10px;
+    width: 300px;
+    height: 150px;
+    background-color: white;
+    padding: 10px;
+
+}
+.successArea{
+    background-color:rgb(191, 237, 191);
+    border-left: 5px solid rgb(84, 144, 84);
+
+}
+.errorArea{
+    background-color:rgb(238, 149, 149);
+    border-left: 5px solid rgb(148, 81, 81);
+
+}
+
 
