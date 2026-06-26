@@ -36,7 +36,7 @@ input,select,button{
 }
 
 button{
-    background:#4a90e2;
+    background:#66819f;
     color:white;
     border:none;
     transition: 0.5s all;
@@ -65,3 +65,4 @@ button:hover{
 .success{
     color:green;
 }
+
